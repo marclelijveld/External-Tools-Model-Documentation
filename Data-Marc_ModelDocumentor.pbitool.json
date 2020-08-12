@@ -1,5 +1,5 @@
 {
-	"version": "1.0",
+	"version": "1.0.1",
 	"name": "Document Model",
 	"description": "This tool documents your Power BI data model in a separate Power BI report",
 	"path": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
