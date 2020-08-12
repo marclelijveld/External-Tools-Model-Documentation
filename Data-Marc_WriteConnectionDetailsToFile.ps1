@@ -10,11 +10,16 @@
 
 # Below you can define your personal preference for file saving and reading. 
 # The default location can be changed and will be leverages througout the entire script. 
-# InstallerLocation only applies to installation via PowerBI.tips Business Ops. 
-$InstallerLocation = '__TOOL_INSTALL_DIR__'
-$defaultLocation = 'c:\BusinessOpsTemp\'
+# InstallerLocation only applies to installation via PowerBI.tips Business Ops.
+$InstallerLocation = '__TOOL_INSTALL_DIR__\'
+$defaultLocation = 'C:\BusinessOpsTemp\'
 $finalLocation = if($InstallerLocation -like '*TOOL_INSTALL_DIR*') 
 {$defaultLocation} else {$InstallerLocation}
+
+# Write out file locations
+Write-Host 'installer location ' + $InstallerLocation
+Write-Host 'default location ' + $defaultLocation
+Write-Host 'final location ' + $finalLocation
 
 #This part starts tracing to catch unfortunate errors and defines where to write the file. 
 $Logfile = $finalLocation + 'PBI_DocumentModel_LogFile.txt'
@@ -31,11 +36,11 @@ Param(
     )
 
     $baseUri = "https://api.github.com/"
-    $args = "repos/$Owner/$Repository/contents/$Path"
-    $wr = Invoke-WebRequest -Uri $($baseuri+$args)
+    $UriPath = "repos/$Owner/$Repository/contents/$Path"
+    $wr = Invoke-WebRequest -Uri $($baseuri+$UriPath)
     $objects = $wr.Content | ConvertFrom-Json
-    $files = $objects | where {$_.type -eq "file"} | Select -exp download_url
-    $directories = $objects | where {$_.type -eq "dir"}
+    $files = $objects | Where-Object {$_.type -eq "file"} | Select-Object -exp download_url
+    $directories = $objects | Where-Object {$_.type -eq "dir"}
     
     $directories | ForEach-Object { 
         DownloadFilesFromRepo -Owner $Owner -Repository $Repository -Path $_.path -DestinationPath $($DestinationPath+$_.name)
@@ -63,10 +68,6 @@ Param(
 
 }
 
-#This part starts tracing to catch unfortunate errors and defines where to write the file. 
-$Logfile = $finalLocation + 'PBI_DocumentModel_LogFile.txt'
-Start-Transcript -Path $Logfile
-
 # The PBITLocation defines where the templated PBIT file is saved. 
 # In case you are using a different pbit file, you can define that in below variable.
 $PBITLocation = $finalLocation + 'ModelDocumentationTemplate.pbit'
@@ -88,18 +89,23 @@ $json = @"
     }
 "@
 
+try {
+    New-Item -Path "c:\" -Name "BusinessOpsTemp" -ItemType "directory"
+} catch {
+    Write-Host "Error creating file path"
+}
+
 # Writes the output in json format to the defined file location. This is a temp location and will be overwritten next time. 
-$OutputLocation = $finalLocation + 'ModelDocumenterConnectionDetails.json'
+$OutputLocation = $defaultLocation + 'ModelDocumenterConnectionDetails.json'
 $json  | ConvertTo-Json  | Out-File $OutputLocation
 
 # Open PBIT template file from PBITLocation as defined in the variable. 
 try {
     Invoke-Item $PBITLocation  -ErrorAction Stop 
-    }
-catch {
-         DownloadFilesFromRepo
-         Invoke-Item $PBITLocation
-      }
+} catch {
+    DownloadFilesFromRepo
+    Invoke-Item $PBITLocation
+}
 
 # Stop tracing errors
 Stop-Transcript
