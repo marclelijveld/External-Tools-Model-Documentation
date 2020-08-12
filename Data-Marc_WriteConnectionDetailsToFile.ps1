@@ -1,18 +1,67 @@
 ﻿<# 
-    External Tools Power BI model documentor script version 1.0.1
+    External Tools Power BI model documentor script version 1.1.0
     New in this version: 
-        - Easier editing of personal preferred location. This is now defined in one single variable ($defaultlocation). 
-        - Added logging for the script. 
-        - Prepared for upcoming changes with $finalLocation. Soon more about this.
-        - Better error handling in the pbit file which results in less errors while loading the data. 
+        - Support for installation via PowerBI.tips Business Ops. 
+        - Automatic detection of installer location vs default location. 
+        - Automatic download of the pbit file if it cannot be found.  
 
     Full change log can be found here: https://data-marc.com/model-documenter/
 #>
 
 # Below you can define your personal preference for file saving and reading. 
 # The default location can be changed and will be leverages througout the entire script. 
-$defaultLocation = 'c:\temp\'
-$finalLocation = $defaultLocation
+# InstallerLocation only applies to installation via PowerBI.tips Business Ops. 
+$InstallerLocation = '__TOOL_INSTALL_DIR__'
+$defaultLocation = 'c:\BusinessOpsTemp\'
+$finalLocation = if($InstallerLocation -like '*TOOL_INSTALL_DIR*') 
+{$defaultLocation} else {$InstallerLocation}
+
+#This part starts tracing to catch unfortunate errors and defines where to write the file. 
+$Logfile = $finalLocation + 'PBI_DocumentModel_LogFile.txt'
+Start-Transcript -Path $Logfile
+
+# Function to automatically download the pbit file if it cannot be found on the defined location. 
+# Function based on https://gist.github.com/chrisbrownie/f20cb4508975fb7fb5da145d3d38024a 
+function DownloadFilesFromRepo {
+Param(
+    $Owner = 'marclelijveld',
+    $Repository = 'External-Tools-Model-Documentation',
+    $Path = 'ModelDocumentationTemplate.pbit',
+    $DestinationPath = 'C:\BusinessOpsTemp'
+    )
+
+    $baseUri = "https://api.github.com/"
+    $args = "repos/$Owner/$Repository/contents/$Path"
+    $wr = Invoke-WebRequest -Uri $($baseuri+$args)
+    $objects = $wr.Content | ConvertFrom-Json
+    $files = $objects | where {$_.type -eq "file"} | Select -exp download_url
+    $directories = $objects | where {$_.type -eq "dir"}
+    
+    $directories | ForEach-Object { 
+        DownloadFilesFromRepo -Owner $Owner -Repository $Repository -Path $_.path -DestinationPath $($DestinationPath+$_.name)
+    }
+
+    
+    if (-not (Test-Path $DestinationPath)) {
+        # Destination path does not exist, let's create it
+        try {
+            New-Item -Path $DestinationPath -ItemType Directory -ErrorAction Stop
+        } catch {
+            throw "Could not create path '$DestinationPath'!"
+        }
+    }
+
+    foreach ($file in $files) {
+        $fileDestination = Join-Path $DestinationPath (Split-Path $file -Leaf)
+        try {
+            Invoke-WebRequest -Uri $file -OutFile $fileDestination -ErrorAction Stop -Verbose
+            "Grabbed '$($file)' to '$fileDestination'"
+        } catch {
+            throw "Unable to download '$($file.path)'"
+        }
+    }
+
+}
 
 #This part starts tracing to catch unfortunate errors and defines where to write the file. 
 $Logfile = $finalLocation + 'PBI_DocumentModel_LogFile.txt'
@@ -44,10 +93,13 @@ $OutputLocation = $finalLocation + 'ModelDocumenterConnectionDetails.json'
 $json  | ConvertTo-Json  | Out-File $OutputLocation
 
 # Open PBIT template file from PBITLocation as defined in the variable. 
-Invoke-Item $PBITLocation
+try {
+    Invoke-Item $PBITLocation  -ErrorAction Stop 
+    }
+catch {
+         DownloadFilesFromRepo
+         Invoke-Item $PBITLocation
+      }
 
-# Catching possible errors and writing to the log file
-Write-Output 'Errors occured: ' $error.count
-Write-Output $error[0]
-
+# Stop tracing errors
 Stop-Transcript
