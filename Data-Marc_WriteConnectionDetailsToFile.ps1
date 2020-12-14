@@ -31,7 +31,7 @@ Start-Transcript -Path $Logfile | out-null
 # Define Template Locations
 # In case you are using a different pbit file, you can define that in below variable.
 $PbitLocation = $finalLocation + 'ModelDocumentationTemplate.pbit'
-$ExcelLocation = $finalLocation + 'ModelDocumentationTemplate.xlsx'
+$ExcelLocation = $finalLocation + 'ModelDocumentationTemplate.xltx'
 
 # Write out file locations - Uncomment below code section if you want to display the location on the screen for debugging purposes
 <# 
@@ -133,13 +133,13 @@ Function OpenDocumentationInExcel {
 try {
     Invoke-Item $ExcelLocation  -ErrorAction Stop 
 } catch {
-    $Path = 'ModelDocumentationTemplate.xlsx'
+    $Path = 'ModelDocumentationTemplate.xltx'
     
     Write-Host "Template file not found." -ForegroundColor Red 
 Write-Host @"
 
 The current version of the script does not support automated download for the Excel Template yet. 
-Please download the ModelDocumentationTemplate.xlsx and put in the $finalLocation
+Please download the ModelDocumentationTemplate.xltx and put in the $finalLocation
 You can find the file here: https://github.com/marclelijveld/External-Tools-Model-Documentation
 "@ -ForegroundColor Yellow
     # DownloadTemplateFromRepo
