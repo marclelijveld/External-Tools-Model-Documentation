@@ -23,6 +23,11 @@ $defaultLocation = 'C:\BusinessOpsTemp\'
 $finalLocation = if($InstallerLocation -like '*TOOL_INSTALL_DIR*') 
 {$defaultLocation} else {$InstallerLocation}
 
+$Logfile = $finalLocation + 'PBI_DocumentModel_LogFile.txt'
+
+#This part starts tracing to catch unfortunate errors and defines where to write the file. 
+Start-Transcript -Path $Logfile | out-null
+
 # Define Template Locations
 # In case you are using a different pbit file, you can define that in below variable.
 $PbitLocation = $finalLocation + 'ModelDocumentationTemplate.pbit'
@@ -60,13 +65,22 @@ Function StartMenu {
     }
 }
 
+# Creates a folder on earlier defined location for file dropoff
+Function CreateDropOffFolder {
+try {
+    New-Item -Path "c:\" -Name $DefaultFolderName -ItemType "directory" | out-null
+} catch {
+    Write-Host "Error creating file path"
+    Read-Host "Press a key to close the application"
+}
+}
+
 # Function to automatically download the pbit file if it cannot be found on the defined location. 
 # Function based on https://gist.github.com/chrisbrownie/f20cb4508975fb7fb5da145d3d38024a 
 function DownloadTemplateFromRepo {
 Param(
     $Owner = 'marclelijveld',
-    $Repository = 'External-Tools-Model-Documentation',
-    $DestinationPath = 'C:\BusinessOpsTemp'
+    $Repository = 'External-Tools-Model-Documentation'
     )
 
     $baseUri = "https://api.github.com/"
@@ -77,20 +91,20 @@ Param(
     $directories = $objects | Where-Object {$_.type -eq "dir"}
     
     $directories | ForEach-Object { 
-        DownloadTemplateFromRepo -Owner $Owner -Repository $Repository -Path $_.path -DestinationPath $($DestinationPath+$_.name)
+        DownloadTemplateFromRepo -Owner $Owner -Repository $Repository -Path $_.path -DefaultFolderPath $($DefaultFolderPath+$_.name)
     }
 
-    if (-not (Test-Path $DestinationPath)) {
+    if (-not (Test-Path $DefaultFolderPath)) {
         # Destination path does not exist, let's create it
         try {
-            New-Item -Path $DestinationPath -ItemType Directory -ErrorAction Stop
+            New-Item -Path $DefaultFolderPath -ItemType Directory -ErrorAction Stop
         } catch {
-            throw "Could not create path '$DestinationPath'!"
+            throw "Could not create path '$DefaultFolderPath'!"
         }
     }
 
     foreach ($file in $files) {
-        $fileDestination = Join-Path $DestinationPath (Split-Path $file -Leaf)
+        $fileDestination = Join-Path $DefaultFolderPath (Split-Path $file -Leaf)
         try {
             Invoke-WebRequest -Uri $file -OutFile $fileDestination -ErrorAction Stop -Verbose
             "Grabbed '$($file)' to '$fileDestination'"
@@ -107,6 +121,8 @@ try {
     Invoke-Item $PbitLocation  -ErrorAction Stop 
 } catch {
     $Path = 'ModelDocumentationTemplate.pbit'
+    Write-Host "Template file not found." 
+    Write-Host "Start download template from GitHub..."
     DownloadTemplateFromRepo
     Invoke-Item $PbitLocation
 }
@@ -114,7 +130,34 @@ try {
 
 # Open Excel template file from PBITLocation as defined in the variable.
 Function OpenDocumentationInExcel {
-Read-Host "This task is still under construction. Please press a key to continue" 
+try {
+    Invoke-Item $ExcelLocation  -ErrorAction Stop 
+} catch {
+    $Path = 'ModelDocumentationTemplate.xlsx'
+    
+    Write-Host "Template file not found." -ForegroundColor Red 
+Write-Host @"
+
+The current version of the script does not support automated download for the Excel Template yet. 
+Please download the ModelDocumentationTemplate.xlsx and put in the $finalLocation
+You can find the file here: https://github.com/marclelijveld/External-Tools-Model-Documentation
+"@ -ForegroundColor Yellow
+    # DownloadTemplateFromRepo
+    Read-Host "Please press a key once you are ready to continue" 
+    Invoke-Item $ExcelLocation -ErrorAction Inquire
+}
+}
+
+# =================================================================================================================================================
+# Pre-execution tasks
+# =================================================================================================================================================
+
+# Checks whether a dropoff location already exists, otherwise create location
+$DefaultFolderName = "BusinessOpsTemp"
+$DefaultFolderPath = "c:\" + $DefaultFolderName
+$FolderExists = Test-Path $DefaultFolderPath
+If ($FolderExists -eq $False) {
+CreateDropOffFolder
 }
 
 # Below section defines the server and databasename based on the input captured from the External tools integration. 
@@ -130,14 +173,7 @@ $json = @"
     }
 "@
 
-try {
-    New-Item -Path "c:\" -Name "BusinessOpsTemp" -ItemType "directory"
-} catch {
-    Write-Host "Error creating file path"
-    Read-Host "Press a key to close the application" 
-}
-
-# Writes the output in json format to the defined file location. This is a temp location and will be overwritten next time. 
+# Writes the connectionstring in json format to the defined file location. This is a temp fo and will be overwritten next time. 
 $OutputLocation = $defaultLocation + 'ModelDocumenterConnectionDetails.json'
 $json  | ConvertTo-Json  | Out-File $OutputLocation
 
@@ -145,21 +181,17 @@ $json  | ConvertTo-Json  | Out-File $OutputLocation
 # RUN APPLICATION
 # =================================================================================================================================================
 
-#This part starts tracing to catch unfortunate errors and defines where to write the file. 
-$Logfile = $finalLocation + 'PBI_DocumentModel_LogFile.txt'
-Start-Transcript -Path $Logfile
-
 # Write Server and Database information to screen. 
 Write-Host "`n"
 Write-Host 'Welcome to the Power BI Model Documenter!'
 Write-Host "`n"
 Write-Host "Your Power BI Model currently runs with the following connection details:"
 Write-Host "Server: " $Server 
-Write-Host "Database:" $DatabaseName 
+Write-Host "Database: " $DatabaseName 
 Write-Host "`n"
 
-# Show Menu and trigger actions
-StartMenu 
+# Show Menu to choose action
+StartMenu
 
 # Stop tracing errors
 Stop-Transcript
