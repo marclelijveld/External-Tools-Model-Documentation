@@ -5,8 +5,11 @@
     External Tools Power BI model documentor script version 1.2.0
     New in this version: 
         - Introduced a small menu to choose the output format of your preference. 
-            - Power BI
-            - Excel
+            - Power BI Template
+            - Excel Template
+        - Better error handling while running the script
+        - Enhanced logging for debugging
+        - Several minor improvements
 
     Full change log can be found here: https://data-marc.com/model-documenter/
 #>
