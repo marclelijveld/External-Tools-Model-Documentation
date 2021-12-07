@@ -22,6 +22,7 @@ namespace VertiPaqExport
 
         static void Main(string[] args)
         {
+            int exitCode = 0;
             CommandLineParser.CommandLineParser parser = new CommandLineParser.CommandLineParser();
 
             ValueArgument<string> serverArgument = new ValueArgument<string>('s', "server", "This parameter specifies the server name.");
@@ -41,6 +42,7 @@ namespace VertiPaqExport
             {
                 /* parse command line arguments */
                 parser.ParseCommandLine(args);
+                
                 /* this prints results to the console */
                 parser.ShowParsedArguments();
             }
@@ -49,18 +51,31 @@ namespace VertiPaqExport
                 Console.WriteLine(e.Message);
                 parser.ShowUsage();
                 Console.ReadLine();
+                exitCode = 1;
             }
 
-            VpaqExport(serverArgument.Value, databaseArgument.Value, filenameArgument.Value);
+            if (serverArgument.Value.StartsWith("pbiazure://api.powerbi.com"))
+            {
+                Console.WriteLine($"Server {serverArgument.Value} not supported.");
+                exitCode = 2;
+            }
+            else
+            {
+                exitCode = VpaqExport(serverArgument.Value, databaseArgument.Value, filenameArgument.Value);
+
+            }
+
+            Environment.Exit(exitCode);
         }
 
-        static void VpaqExport(string serverName, string databaseName, string fileName)
+        static int VpaqExport(string serverName, string databaseName, string fileName)
         {
             const string applicationName = "VpaqExport";
             const string applicationVersion = "0.1";
             bool includeTomModel = true;
-
+            
             string logFile = Path.ChangeExtension(fileName, ".log");
+            int exitCode = 0;
 
             try
             {
@@ -99,7 +114,10 @@ namespace VertiPaqExport
             {
                 Console.WriteLine(e.Message);
                 Console.ReadLine();
+                exitCode = 2;
             }
+
+            return exitCode;
         }
 
         public static void Log(string logMessage, TextWriter w)
