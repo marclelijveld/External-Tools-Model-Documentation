@@ -40,7 +40,9 @@ namespace ModelDocumenter
 
         static void Main(string[] args)     
         {
-            Console.WriteLine(string.Format("{1} {2} for .Net ({3}){0}", applicationName, applicationVersion, execAssembly.ImageRuntimeVersion));
+            Console.WriteLine($"---");
+            Console.WriteLine($"--- {applicationName} {applicationVersion} for.Net ({execAssembly.ImageRuntimeVersion})");
+            Console.WriteLine($"---");
 
             ModelDocumenterErrEnum exitCode = ModelDocumenterErrEnum.ERROR_SUCCESS;
             CommandLineParser.CommandLineParser parser = new CommandLineParser.CommandLineParser();

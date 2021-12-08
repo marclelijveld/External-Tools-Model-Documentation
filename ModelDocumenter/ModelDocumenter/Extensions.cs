@@ -5,7 +5,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace VertiPaqExport
+namespace ModelDocumenter
 {
     public static class Extensions
     {
