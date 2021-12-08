@@ -16,9 +16,9 @@ using System.Reflection;
 // TODO
 // - Import from DMV 1100 (check for missing attributes?)
 #pragma warning disable IDE0051 // Remove unused private members
-namespace VertiPaqExport
+namespace ModelDocumenter
 {
-    public enum VpaqExportErrEnum
+    public enum ModelDocumenterErrEnum
     {
         [Description("The operation completed successfully.")]
         ERROR_SUCCESS,
@@ -26,18 +26,23 @@ namespace VertiPaqExport
         ERROR_BAD_ARGUMENTS,
         [Description("This server is not supported.")]
         ERROR_NOT_SUPPORTED,
-        [Description("Error exporting vpaq file.")]
-        ERROR_EXPORT_VPAQ
+        [Description("Error exporting vpax file.")]
+        ERROR_EXPORT_Vpax
     }
 
     class Program
     {
-        public static string applicationName = System.Reflection.Assembly.GetExecutingAssembly().GetName().Name;
-        public static string applicationVersion = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
+        public static Assembly execAssembly = Assembly.GetCallingAssembly();
+        public static AssemblyName assemblyName = execAssembly.GetName();
 
-        static void Main(string[] args)
+        public static string applicationName = assemblyName.Name;
+        public static string applicationVersion = $"{assemblyName.Version.Major:0}.{assemblyName.Version.Minor:0}";
+
+        static void Main(string[] args)     
         {
-            VpaqExportErrEnum exitCode = VpaqExportErrEnum.ERROR_SUCCESS;
+            Console.WriteLine(string.Format("{1} {2} for .Net ({3}){0}", applicationName, applicationVersion, execAssembly.ImageRuntimeVersion));
+
+            ModelDocumenterErrEnum exitCode = ModelDocumenterErrEnum.ERROR_SUCCESS;
             CommandLineParser.CommandLineParser parser = new CommandLineParser.CommandLineParser();
 
             ValueArgument<string> serverArgument = new ValueArgument<string>('s', "server", "This parameter specifies the server name.");
@@ -65,23 +70,23 @@ namespace VertiPaqExport
             {
                 Console.WriteLine(e.Message);
                 parser.ShowUsage();
-                exitCode = VpaqExportErrEnum.ERROR_BAD_ARGUMENTS;
+                exitCode = ModelDocumenterErrEnum.ERROR_BAD_ARGUMENTS;
             }
 
-            if (exitCode == VpaqExportErrEnum.ERROR_SUCCESS)
+            if (exitCode == ModelDocumenterErrEnum.ERROR_SUCCESS)
             {
                 if (serverArgument.Value.StartsWith("pbiazure://api.powerbi.com"))
                 {
                     Console.WriteLine($"Server {serverArgument.Value} not supported.");
-                    exitCode = VpaqExportErrEnum.ERROR_NOT_SUPPORTED;
+                    exitCode = ModelDocumenterErrEnum.ERROR_NOT_SUPPORTED;
                 }
                 else
                 {
-                    exitCode = VpaqExport(serverArgument.Value, databaseArgument.Value, filenameArgument.Value);
+                    exitCode = VpaxExport(serverArgument.Value, databaseArgument.Value, filenameArgument.Value);
                 }
             }
 
-            if (exitCode != VpaqExportErrEnum.ERROR_SUCCESS)
+            if (exitCode != ModelDocumenterErrEnum.ERROR_SUCCESS)
             {
                 Console.WriteLine("Error 0x{0:x4}: {1}", (int)exitCode, exitCode.GetDescription());
                 Console.ReadLine();
@@ -89,9 +94,9 @@ namespace VertiPaqExport
             Environment.Exit((int)exitCode);
         }
 
-        static VpaqExportErrEnum VpaqExport(string serverName, string databaseName, string fileName)
+        static ModelDocumenterErrEnum VpaxExport(string serverName, string databaseName, string fileName)
         {
-            VpaqExportErrEnum exitCode = VpaqExportErrEnum.ERROR_SUCCESS;
+            ModelDocumenterErrEnum exitCode = ModelDocumenterErrEnum.ERROR_SUCCESS;
 
             bool includeTomModel = true;
 
@@ -136,7 +141,7 @@ namespace VertiPaqExport
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
-                exitCode = VpaqExportErrEnum.ERROR_EXPORT_VPAQ;
+                exitCode = ModelDocumenterErrEnum.ERROR_EXPORT_Vpax;
             }
 
             return exitCode;
