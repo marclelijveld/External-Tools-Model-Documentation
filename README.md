@@ -1,5 +1,6 @@
 # Power BI Model Documentater
-This repository includes the source code of Model Documenter version 2.0.0 and up. This tool can be run as an external tool from Power BI Desktop and is build upon the [Dax.Model.Extractor nuget package](https://www.nuget.org/packages/Dax.Model.Extractor/) build by Marco Russo. 
+This repository includes the source code of the Power BI Model Documenter external tool, version 2.0.0 and up. For more details, please have a look the [webpage of this tool](https://data-marc.com/model-documenter/). Also find related blog posts [here](https://data-marc.com/?s=model+documenter+external+tool+). 
+This tool is build upon the [Dax.Model.Extractor nuget package](https://www.nuget.org/packages/Dax.Model.Extractor/) build by Marco Russo. 
 
 ### Contributing 
 As the tool is build by and intended for the Power BI Community, you are free to download the source code and enhance to your own requirements. Contribution to this repository is highly appreciated in everyones benefit. Please for the repository and create pull requests with useful additions. 
