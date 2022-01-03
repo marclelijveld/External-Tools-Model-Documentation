@@ -106,6 +106,19 @@ namespace ModelDocumenter
             // Create log filename, use filename with .log extension
             //
             string logFile = Path.ChangeExtension(fileName, ".log");
+            string outputPath = Path.GetDirectoryName(fileName);
+            if (!Directory.Exists(outputPath))
+            {
+                try
+                {
+                    // Try to create the directory.
+                    DirectoryInfo di = Directory.CreateDirectory(outputPath);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine("Cannot create directory '{0}': {1}", outputPath, e.ToString());
+                }
+            }
 
             try
             {
