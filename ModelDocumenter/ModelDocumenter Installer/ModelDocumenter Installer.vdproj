@@ -57,6 +57,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_478BCCA074034155867A32BE06557AED"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_4CD10D5C7468659FABFEEDF140DB4D55"
         "OwnerKey" = "8:_8F9376A480CB0E30C364A96BC2A2D5B5"
         "MsmSig" = "8:_UNDEFINED"
@@ -183,6 +189,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_B4CC513A7D3D4ED281BBAB85B2812DF7"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_C27B470C3C489605E2450BBC702FB749"
         "OwnerKey" = "8:_5E11C8B3FF8E49DAB701B8CB3039F914"
         "MsmSig" = "8:_UNDEFINED"
@@ -251,6 +263,12 @@
         {
         "MsmKey" = "8:_EAB409D5080DF5A70A08F6DDE162FBA8"
         "OwnerKey" = "8:_8F9376A480CB0E30C364A96BC2A2D5B5"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_EDB87049751741769F30507D8EC123B5"
+        "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -430,6 +448,14 @@
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.7.2"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.7.2 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.7.2"
+                    }
+                }
             }
         }
     }
@@ -551,6 +577,26 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_478BCCA074034155867A32BE06557AED"
+            {
+            "SourcePath" = "8:..\\ModelDocumenter\\ModelDocumenter.ico"
+            "TargetName" = "8:ModelDocumenter.ico"
+            "Tag" = "8:"
+            "Folder" = "8:_D19B536218D040E69274BF2877F0ECB4"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_4CD10D5C7468659FABFEEDF140DB4D55"
@@ -801,6 +847,26 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_B4CC513A7D3D4ED281BBAB85B2812DF7"
+            {
+            "SourcePath" = "8:..\\..\\Data-Marc_ModelDocumenterV2.pbitool.json"
+            "TargetName" = "8:Data-Marc_ModelDocumenterV2.pbitool.json"
+            "Tag" = "8:"
+            "Folder" = "8:_58D0FAE90156455694ABC11975E9ADBA"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_C27B470C3C489605E2450BBC702FB749"
             {
             "AssemblyRegister" = "3:1"
@@ -956,6 +1022,26 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_EDB87049751741769F30507D8EC123B5"
+            {
+            "SourcePath" = "8:..\\..\\ModelDocumentationTemplate.pbit"
+            "TargetName" = "8:ModelDocumentationTemplate.pbit"
+            "Tag" = "8:"
+            "Folder" = "8:_71243ECAC28242C0859F2DF7EA26CF7C"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_F97D354A7C96A956FA0ABD8E1D7EA332"
             {
             "AssemblyRegister" = "3:1"
@@ -1055,6 +1141,61 @@
             "Property" = "8:CommonFilesFolder"
                 "Folders"
                 {
+                    "{9EF0B969-E518-4E46-987F-47570745A589}:_905D505C0D594A5FAC5E547B04E14BAA"
+                    {
+                    "Name" = "8:Data-Marc"
+                    "AlwaysCreate" = "11:FALSE"
+                    "Condition" = "8:"
+                    "Transitive" = "11:FALSE"
+                    "Property" = "8:_636E64D36CE6423CACA383AA6297293F"
+                        "Folders"
+                        {
+                            "{9EF0B969-E518-4E46-987F-47570745A589}:_71243ECAC28242C0859F2DF7EA26CF7C"
+                            {
+                            "Name" = "8:ModelDocumenter"
+                            "AlwaysCreate" = "11:FALSE"
+                            "Condition" = "8:"
+                            "Transitive" = "11:FALSE"
+                            "Property" = "8:_7957EF467224413C8BEDB2CF380ACAE7"
+                                "Folders"
+                                {
+                                }
+                            }
+                        }
+                    }
+                    "{9EF0B969-E518-4E46-987F-47570745A589}:_9E1493A363A64458B365E666385D967C"
+                    {
+                    "Name" = "8:Microsoft Shared"
+                    "AlwaysCreate" = "11:FALSE"
+                    "Condition" = "8:"
+                    "Transitive" = "11:FALSE"
+                    "Property" = "8:_7E2D85E87C894A0BBE8E93A36A031A05"
+                        "Folders"
+                        {
+                            "{9EF0B969-E518-4E46-987F-47570745A589}:_253B8321C3E34794AC26C045A1C8B0EB"
+                            {
+                            "Name" = "8:Power BI Desktop"
+                            "AlwaysCreate" = "11:FALSE"
+                            "Condition" = "8:"
+                            "Transitive" = "11:FALSE"
+                            "Property" = "8:_47C905F8CB0A4EA0A996CB28DF58EBB2"
+                                "Folders"
+                                {
+                                    "{9EF0B969-E518-4E46-987F-47570745A589}:_58D0FAE90156455694ABC11975E9ADBA"
+                                    {
+                                    "Name" = "8:External Tools"
+                                    "AlwaysCreate" = "11:FALSE"
+                                    "Condition" = "8:"
+                                    "Transitive" = "11:FALSE"
+                                    "Property" = "8:_D4ACEA9CDB604C468A050C462446D9B6"
+                                        "Folders"
+                                        {
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             }
             "{3C67513D-01DD-4637-8A68-80971EB9504F}:_D19B536218D040E69274BF2877F0ECB4"
@@ -1086,7 +1227,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:ModelDocumenter"
         "ProductCode" = "8:{CF69A288-5F56-433F-BF7D-DDED7D097D46}"
-        "PackageCode" = "8:{73D2B4A6-AA18-420E-8D60-FCB8EDA9F084}"
+        "PackageCode" = "8:{68873487-6126-4E0F-9601-3B097CE0A7A2}"
         "UpgradeCode" = "8:{2CF22048-927A-44BB-9998-B26C3E8B55A5}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
@@ -1098,12 +1239,12 @@
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
         "Title" = "8:ModelDocumenter Installer"
-        "Subject" = "8:Power BI Model documenter"
+        "Subject" = "8:Power BI model documenter"
         "ARPCONTACT" = "8:Marc Lelijveld"
         "Keywords" = "8:"
         "ARPCOMMENTS" = "8:Power BI model documenter"
         "ARPURLINFOABOUT" = "8:https://data-marc.com/model-documenter/"
-        "ARPPRODUCTICON" = "8:"
+        "ARPPRODUCTICON" = "8:_478BCCA074034155867A32BE06557AED"
         "ARPIconIndex" = "3:0"
         "SearchPath" = "8:"
         "UseSystemSearchPath" = "11:TRUE"
