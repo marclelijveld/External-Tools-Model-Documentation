@@ -56,9 +56,13 @@ namespace ModelDocumenter
             ValueArgument<string> filenameArgument = new ValueArgument<string>('f', "filename", "This parameter specifies the export filename.");
             databaseArgument.Optional = false;
 
+            ValueArgument<string> pbitemplateArgument = new ValueArgument<string>('p', "pbitemplate", "This parameter specifies the location of the power bi template file.");
+            pbitemplateArgument.Optional = false;
+
             parser.Arguments.Add(serverArgument);
             parser.Arguments.Add(databaseArgument);
             parser.Arguments.Add(filenameArgument);
+            parser.Arguments.Add(pbitemplateArgument);
 
             try
             {
@@ -86,6 +90,10 @@ namespace ModelDocumenter
                 {
                     exitCode = VpaxExport(serverArgument.Value, databaseArgument.Value, filenameArgument.Value);
                 }
+                if (exitCode == ModelDocumenterErrEnum.ERROR_SUCCESS)
+                {
+                    System.Diagnostics.Process.Start(pbitemplateArgument.Value);
+                }                    
             }
 
             if (exitCode != ModelDocumenterErrEnum.ERROR_SUCCESS)
