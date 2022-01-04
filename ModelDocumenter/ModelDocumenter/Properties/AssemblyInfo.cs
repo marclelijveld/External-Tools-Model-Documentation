@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("ModelDocumenter")]
 [assembly: AssemblyDescription("Model documentor using a Power BI datamodel as vertipaq file.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Macaw")]
+[assembly: AssemblyCompany("Data-Marc")]
 [assembly: AssemblyProduct("ModelDocumenter")]
 [assembly: AssemblyCopyright("Copyright ©  2021")]
 [assembly: AssemblyTrademark("")]
