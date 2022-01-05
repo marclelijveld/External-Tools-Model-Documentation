@@ -15,3 +15,9 @@ To find source codes and installation files for prior versions of the model docu
 
 ### Licensing
 The tool is community based and free of use. There is no license involved nor any responsiblity, liability or warranty. Everything is based on best effort. Please also view the [full license statement](https://github.com/marclelijveld/External-Tools-Model-Documentation/blob/master/LICENSE)
+
+### Swag
+Are you looking for Power BI Model Documenter swag? Have a look at my [webshop](https://data-marc-store.creator-spring.com/?)!
+Shirts, sweaters and more! In different colors :) 
+
+![image](https://user-images.githubusercontent.com/38921736/148243886-47c1c249-4319-4cc6-93c1-917ccd1dd455.png)
