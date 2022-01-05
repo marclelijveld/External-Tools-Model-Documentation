@@ -44,6 +44,9 @@ namespace ModelDocumenter
             Console.WriteLine($"--- {applicationName} {applicationVersion} for.Net ({execAssembly.ImageRuntimeVersion})");
             Console.WriteLine($"---");
 
+            var plugins = LoadPlugins();
+
+
             ModelDocumenterErrEnum exitCode = ModelDocumenterErrEnum.ERROR_SUCCESS;
             CommandLineParser.CommandLineParser parser = new CommandLineParser.CommandLineParser();
 
@@ -102,6 +105,30 @@ namespace ModelDocumenter
                 Console.ReadLine();
             }
             Environment.Exit((int)exitCode);
+        }
+
+        static IList<Assembly> LoadPlugins()
+        {
+            List<Assembly> pluginAssemblies = new List<Assembly>();
+
+            foreach (var dll in Directory.EnumerateFiles(AppDomain.CurrentDomain.BaseDirectory, "*.dll"))
+            {
+                try
+                {
+                    var pluginAssembly = Assembly.LoadFile(dll);
+                    if (pluginAssembly != null)
+                    {
+                        pluginAssemblies.Add(pluginAssembly);
+                        Console.WriteLine("Successfully loaded plugin " + pluginAssembly.FullName + " from assembly " + Path.GetFileName(dll));
+                    }
+                }
+                catch
+                {
+
+                }
+            }
+
+            return pluginAssemblies;
         }
 
         static ModelDocumenterErrEnum VpaxExport(string serverName, string databaseName, string fileName)
