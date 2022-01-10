@@ -1,4 +1,4 @@
-# Power BI Model Documentater
+# Power BI Model Documenter
 This repository includes the source code of the Power BI Model Documenter external tool. If you want to read more about the tool itself, how it works and what elements of your data model are documented, please read the [wiki - introduction to the Power BI Model Documenter](https://github.com/marclelijveld/External-Tools-Model-Documentation/wiki/1.-Introduction-to-the-Power-BI-Model-Documenter). 
 
 For downloading the installer of this tool, or more general information, please have a look the [webpage of this tool](https://data-marc.com/model-documenter/). Also find related blog posts [here](https://data-marc.com/?s=model+documenter+external+tool+). 
