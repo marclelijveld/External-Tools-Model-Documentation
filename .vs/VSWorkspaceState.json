@@ -1,7 +1,11 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\ModelDocumenter",
+    "\\ModelDocumenter\\ModelDocumenter",
+    "\\ModelDocumenter\\ModelDocumenter Installer",
+    "\\ModelDocumenter\\ModelDocumenter\\Properties",
+    "\\ModelDocumenter\\_nuget"
   ],
-  "SelectedNode": "\\ModelDocumenter.sln",
   "PreviewInSolutionExplorer": false
 }
