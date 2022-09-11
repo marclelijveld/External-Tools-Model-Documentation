@@ -170,7 +170,7 @@ namespace ModelDocumenter
                     // Get TOM model from the SSAS engine
                     //
                     Log("[INFO] Get TOM model from the SSAS engine", w);
-                    Microsoft.AnalysisServices.Database database = includeTomModel ? Dax.Metadata.Extractor.TomExtractor.GetDatabase(serverName, databaseName) : null;
+                    Microsoft.AnalysisServices.Tabular.Database database = includeTomModel ? Dax.Metadata.Extractor.TomExtractor.GetDatabase(serverName, databaseName) : null;
 
                     // 
                     // Create VertiPaq Analyzer views
