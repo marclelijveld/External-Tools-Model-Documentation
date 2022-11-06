@@ -78,16 +78,16 @@
       <Version>3.0.23</Version>
     </PackageReference>
     <PackageReference Include="Dax.Metadata">
-      <Version>1.2.7</Version>
+      <Version>1.2.8</Version>
     </PackageReference>
     <PackageReference Include="Dax.Model.Extractor">
-      <Version>1.2.7</Version>
+      <Version>1.2.8</Version>
     </PackageReference>
     <PackageReference Include="Dax.ViewVpaExport">
-      <Version>1.2.7</Version>
+      <Version>1.2.8</Version>
     </PackageReference>
     <PackageReference Include="Dax.Vpax">
-      <Version>1.2.7</Version>
+      <Version>1.2.8</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.AnalysisServices.AdomdClient.retail.amd64">
       <Version>19.51.0</Version>
