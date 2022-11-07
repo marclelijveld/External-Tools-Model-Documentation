@@ -1,0 +1,9 @@
+name: $(Date:yyyyMMdd)_$(Rev:rr)
+
+trigger: none
+
+stages:
+  - template: ../stages/stage-build-model-documenter.yml
+    parameters:
+      buildPlatform: ${{ true }}
+      
