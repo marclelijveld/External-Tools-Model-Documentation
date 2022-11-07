@@ -1,0 +1,24 @@
+parameters:
+  - name: buildPlatform
+    type: boolean
+    default: false
+  - name: dependsOnStage
+    type: object
+    default: []
+
+stages:
+
+- stage: stageBuildModelDocumenter
+  displayName: 'build model documenter'
+  dependsOn: ${{ parameters.dependsOnStage }}
+#  variables:
+#  - template: devops/variables/sdp-global.yml@shared # This is the file in the repo
+#  - template: devops/variables/env-d.yml@shared # This is the file in the repo
+
+  jobs:
+
+  # Build SDP solutions
+  - template: ../.lib/jobs/build-model-documenter.yaml
+    parameters:
+      buildSQL: ${{ parameters.buildSQL }}
+      dependsOnJob: []
