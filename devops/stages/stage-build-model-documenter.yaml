@@ -1,5 +1,5 @@
 parameters:
-  - name: buildPlatform
+  - name: buildSolution
     type: boolean
     default: false
   - name: dependsOnStage
@@ -20,5 +20,5 @@ stages:
   # Build SDP solutions
   - template: ../.lib/jobs/build-model-documenter.yaml
     parameters:
-      buildSQL: ${{ parameters.buildSQL }}
+      buildSolution: ${{ parameters.buildSolution }}
       dependsOnJob: []
