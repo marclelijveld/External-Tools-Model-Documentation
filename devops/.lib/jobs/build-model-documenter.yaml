@@ -1,0 +1,57 @@
+parameters:
+  - name: buildSolution
+    type: boolean
+    default: false
+  - name: resourceRootfolder
+    type: string
+    default: '$(System.DefaultWorkingDirectory)'
+  - name: artifactName
+    type: string
+    default: 'smartdataplatform'
+  - name: execute
+    displayName: 'Execute this Job'
+    type: boolean
+    default: true
+  - name: dependsOnJob
+    displayName: 'List of jobs this job depends on'
+    type: object
+    default: []
+
+jobs:
+- job: buildModelDocumenterSolution
+  displayName: 'build model documenter solutions'
+  condition: ${{ parameters.execute }}
+  dependsOn: ${{ parameters.dependsOnJob }}
+
+  pool:
+    vmImage: windows-latest
+
+  steps:
+  - checkout: self
+    clean: true
+    persistCredentials: true
+
+  # Build model documenter .NET application
+  - task: VSBuild@1
+    displayName: 'Build .NET project **\*.sln'
+    enabled: ${{ parameters.buildSolution }}
+    inputs:
+      solution: '${{ parameters.resourceRootfolder }}/ModelDocumenter/*.sln'
+      msbuildArgs:
+      platform:
+      configuration:
+      clean: true
+
+  # Copy dacpac files artifact staging
+  - task: CopyFiles@2
+    displayName: 'Get all .NET bin file(s)'
+    enabled: ${{ parameters.buildSolution }}
+    inputs:
+      SourceFolder: ${{ parameters.resourceRootfolder }}/ModelDocumenter
+      Contents: '**/bin/**/*'
+      TargetFolder: '$(Build.ArtifactStagingDirectory)/ModelDocumenter'
+      flattenFolders: true
+
+# Load everything into the artifact
+  - upload: '$(build.artifactstagingdirectory)/ModelDocumenter'
+    artifact: ${{ parameters.artifactName }}
