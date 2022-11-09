@@ -31,6 +31,11 @@ jobs:
     clean: true
     persistCredentials: true
 
+  - task: NuGetCommand@2
+    displayName: 'NuGet restore'
+    inputs:
+      restoreSolution: '${{ parameters.resourceRootfolder }}/ModelDocumenter/*.sln'
+  
   # Build model documenter .NET application
   - task: VSBuild@1
     displayName: 'Build .NET project **\*.sln'
