@@ -60,7 +60,7 @@ jobs:
       filename: '"$(disableToolPath)\DisableOutOfProcBuild.exe"'
       workingFolder: '"$(disableToolPath)"'
     
-  - script: '"$(devCmd)" ${{ parameters.resourceRootfolder }}/ModelDocumenter/*.sln /Build "Release" /Project "${{ parameters.resourceRootfolder }}/ModelDocumenter/ModelDocumenter Installer/ModelDocumenter Installer.vdproj"' 
+  - script: '"$(devCmd)" ${{ parameters.resourceRootfolder }}\ModelDocumenter\*.sln /Build "Release" /Project "${{ parameters.resourceRootfolder }}\ModelDocumenter\ModelDocumenter Installer\ModelDocumenter Installer.vdproj"' 
     displayName: Build Installer
   
   # Copy dacpac files artifact staging
