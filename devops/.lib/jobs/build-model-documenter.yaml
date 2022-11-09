@@ -36,7 +36,7 @@ jobs:
     clean: true
     persistCredentials: true
 
-  - task: NuGetToolInstaller@1
+  # - task: NuGetToolInstaller@1
   
   - task: NuGetCommand@2
     displayName: 'NuGet restore'
