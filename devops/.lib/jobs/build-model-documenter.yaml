@@ -26,11 +26,18 @@ jobs:
   pool:
     vmImage: windows-latest
 
+  variables:
+    buildPlatform: 'Any CPU'
+    devCmd: 'C:\Program Files\Microsoft Visual Studio\2022\Enterprise\Common7\IDE\devenv.com'
+    disableToolPath: 'C:\Program Files\Microsoft Visual Studio\2022\Enterprise\Common7\IDE\CommonExtensions\Microsoft\VSI\DisableOutOfProcBuild'
+
   steps:
   - checkout: self
     clean: true
     persistCredentials: true
 
+  - task: NuGetToolInstaller@1
+  
   - task: NuGetCommand@2
     displayName: 'NuGet restore'
     inputs:
@@ -47,6 +54,15 @@ jobs:
       configuration:
       clean: true
 
+  - task: BatchScript@1
+    displayName: Enable .vdproj Builds
+    inputs:
+      filename: '"$(disableToolPath)\DisableOutOfProcBuild.exe"'
+      workingFolder: '"$(disableToolPath)"'
+    
+  - script: '"$(devCmd)" ${{ parameters.resourceRootfolder }}/ModelDocumenter/*.sln /Build "Release" /Project "${{ parameters.resourceRootfolder }}/ModelDocumenter/ModelDocumenter Installer/ModelDocumenter Installer.vdproj"' 
+    displayName: Build Installer
+  
   # Copy dacpac files artifact staging
   - task: CopyFiles@2
     displayName: 'Get all .NET bin file(s)'
