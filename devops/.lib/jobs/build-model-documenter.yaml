@@ -69,7 +69,7 @@ jobs:
     enabled: ${{ parameters.buildSolution }}
     inputs:
       SourceFolder: ${{ parameters.resourceRootfolder }}/ModelDocumenter
-      Contents: '**/bin/**/*.msi'
+      Contents: '**/*.msi'
       TargetFolder: '$(Build.ArtifactStagingDirectory)/ModelDocumenter'
       flattenFolders: true
 
