@@ -43,16 +43,16 @@ jobs:
     inputs:
       restoreSolution: '${{ parameters.resourceRootfolder }}/ModelDocumenter/*.sln'
   
-  # Build model documenter .NET application
-  - task: VSBuild@1
-    displayName: 'Build .NET project **\*.sln'
-    enabled: ${{ parameters.buildSolution }}
-    inputs:
-      solution: '${{ parameters.resourceRootfolder }}/ModelDocumenter/*.sln'
-      msbuildArgs:
-      platform:
-      configuration:
-      clean: true
+  # # Build model documenter .NET application
+  # - task: VSBuild@1
+  #   displayName: 'Build .NET project **\*.sln'
+  #   enabled: ${{ parameters.buildSolution }}
+  #   inputs:
+  #     solution: '${{ parameters.resourceRootfolder }}/ModelDocumenter/*.sln'
+  #     msbuildArgs:
+  #     platform:
+  #     configuration:
+  #     clean: true
 
   - task: BatchScript@1
     displayName: Enable .vdproj Builds
@@ -61,7 +61,7 @@ jobs:
       workingFolder: '"$(disableToolPath)"'
     
   - script: '"$(devCmd)" ${{ parameters.resourceRootfolder }}\ModelDocumenter\ModelDocumenter.sln /Build "Debug" /Project "ModelDocumenter Installer"' 
-    displayName: Build Installer
+    displayName: Build ModelDocumenter Installer file(s)
   
   # Copy generated msi files to artifact staging
   - task: CopyFiles@2
