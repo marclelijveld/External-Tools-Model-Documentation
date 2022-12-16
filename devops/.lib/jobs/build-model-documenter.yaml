@@ -7,7 +7,7 @@ parameters:
     default: '$(System.DefaultWorkingDirectory)'
   - name: artifactName
     type: string
-    default: 'smartdataplatform'
+    default: 'modeldocumenter'
   - name: execute
     displayName: 'Execute this Job'
     type: boolean
